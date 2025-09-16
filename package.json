@@ -1,0 +1,42 @@
+{
+  "name": "golden-raspberry-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "ts-node src/server.ts",
+    "test": "NODE_ENV=test jest --forceExit",
+    "test:watch": "NODE_ENV=test jest --watch",
+    "test:coverage": "NODE_ENV=test jest --coverage --forceExit",
+    "migrate:latest": "knex migrate:latest --knexfile knexfile.ts",
+    "migrate:rollback": "knex migrate:rollback --knexfile knexfile.ts",
+    "seed": "knex seed:run --knexfile knexfile.ts",
+    "reset": "knex migrate:rollback --all --knexfile knexfile.ts && knex migrate:latest --knexfile knexfile.ts && knex seed:run --knexfile knexfile.ts",
+    "test:setup": "NODE_ENV=test knex migrate:latest --knexfile knexfile.ts && NODE_ENV=test knex seed:run --knexfile knexfile.ts",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "setup:db": "pnpm docker:up && sleep 5 && pnpm migrate:latest && pnpm seed"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@hono/node-server": "^1.19.2",
+    "csv-parser": "^3.2.0",
+    "dotenv": "^17.2.2",
+    "hono": "^4.9.7",
+    "knex": "^3.1.0",
+    "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.5.0",
+    "@types/pg": "^8.15.5",
+    "jest": "^30.1.3",
+    "ts-jest": "^29.4.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
+}
